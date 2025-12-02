@@ -1,0 +1,12 @@
+conda-env-export==0.6.2
+importlib-metadata==8.0.0
+jaraco.collections==5.1.0
+latex2mathml==3.78.1
+llava==1.2.2.post1
+pip==25.3
+platformdirs==4.2.2
+ruamel-yaml-clib==0.2.15
+tomli==2.0.1
+torchaudio==2.8.0+cu128
+wavedrom==2.0.3.post3
+wheel==0.45.1

@@ -1,0 +1,8 @@
+name: fastvlm
+channels:
+  - defaults
+dependencies:
+  - python=3.10.19
+  - pip:
+      - -r requirements.txt
+prefix: /home/n10288/miniconda3/envs/fastvlm

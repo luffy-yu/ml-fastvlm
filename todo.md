@@ -120,3 +120,40 @@ python -m mlx_vlm.convert --hf-path ./checkpoints/llava-fastvithd_0.5b_stage3 \
 - `llava-fastvithd_1.5b_stage3` - 1.5B params (balanced)
 - `llava-fastvithd_7b_stage3` - 7B params (most capable)
 
+---
+
+# Running Official MLX Model on CUDA
+
+The official pre-exported MLX model (`llava-fastvithd_0.5b_stage3_llm.fp16`) is designed for Apple Silicon with MLX/CoreML.
+To run it on Linux/CUDA, use the conversion script that loads MLX weights into PyTorch.
+
+## Command
+
+```bash
+python model_export/run_mlx_model_on_cuda.py \
+    --mlx-model-path ./exported/llava-fastvithd_0.5b_stage3_llm.fp16 \
+    --vision-tower-path ./checkpoints/llava-fastvithd_0.5b_stage3 \
+    --image-file ./000000039769.jpg \
+    --prompt "Can you describe this image?"
+```
+
+**Note:** This requires the original checkpoint (`checkpoints/llava-fastvithd_0.5b_stage3`) for the vision tower,
+since the MLX export only contains the LLM weights (vision tower is exported as CoreML for Apple Silicon).
+
+**Output:**
+```
+Loading MLX model from ./exported/llava-fastvithd_0.5b_stage3_llm.fp16...
+Using vision tower from ./checkpoints/llava-fastvithd_0.5b_stage3...
+Converting MLX weights to PyTorch format...
+Updated 293 weights from MLX model
+Model dtype: torch.float16
+Model device: cuda:0
+
+Response: Certainly! The image depicts two cats lying on a pink surface, possibly a couch or a bed. One cat is on the left side, and the other is on the right. Both cats appear to be in a relaxed state, possibly sleeping. There are two remote controls placed near the cats, one on the left and the other on the right.
+```
+
+## Files
+
+- `model_export/run_mlx_model_on_cuda.py` - Script to run MLX model on CUDA
+- `exported/llava-fastvithd_0.5b_stage3_llm.fp16/` - Official MLX-exported model
+

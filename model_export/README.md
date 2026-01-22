@@ -52,3 +52,22 @@ python -m mlx_vlm.generate --model /path/to/exported-fastvlm \
 We noticed that sometimes `config.json` for the LLaVA model incorrectly sets the value for `tie_word_embeddings`.
 This causes the following error during conversion, `ValueError: Received parameters not in model: language_model.lm_head.weight.`
 If you encounter this error, set the value of `tie_word_embeddings` accordingly.
+
+## Export fp16 using CUDA
+
+- Export
+
+```
+python model_export/export_fp16_cuda.py \
+    --model-path ./checkpoints/llava-fastvithd_0.5b_stage3 \
+    --output-path ./exported/llava-fastvithd_0.5b_fp16
+```
+
+- Test
+
+```
+python model_export/test_fp16_inference.py \
+    --model-path ./exported/llava-fastvithd_0.5b_fp16 \
+    --image-file ./000000039769.jpg \
+    --prompt "Can you describe this image?"
+```

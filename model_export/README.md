@@ -71,3 +71,80 @@ python model_export/test_fp16_inference.py \
     --image-file ./000000039769.jpg \
     --prompt "Can you describe this image?"
 ```
+
+## Export int8 using CUDA
+
+- Export
+
+```
+python model_export/export_int8_cuda.py \
+    --model-path ./checkpoints/llava-fastvithd_0.5b_stage3 \
+    --output-path ./exported/llava-fastvithd_0.5b_int8
+```
+
+- Test
+
+```
+python model_export/test_int8_inference.py \
+    --model-path ./exported/llava-fastvithd_0.5b_int8 \
+    --image-file ./000000039769.jpg \
+    --prompt "Can you describe this image?"
+```
+
+## Export using adapted MLX on Linux
+
+- Export to MLX
+
+```
+python -m mlx_vlm.convert \
+	--hf-path ./checkpoints/llava-fastvithd_0.5b_stage3 \
+	--mlx-path ./exported/fastvlm_0.5b_8bit \
+	-q \
+	--q-bits 8
+```
+
+- Test MLX Output
+
+```
+python predict_mlxvlm.py \
+    --model-path ./exported/fastvlm_0.5b_8bit \
+    --image-file ./000000039769.jpg \
+    --prompt "Describe this image in detail" \
+    --temperature 0.0 \
+    --max-new-tokens 256 \
+    --verbose
+```
+
+- Test Original
+
+```
+python predict_mlxvlm.py \
+    --model-path ./checkpoints/llava-fastvithd_0.5b_stage3 \
+    --image-file ./000000039769.jpg \
+    --prompt "Describe this image in detail" \
+    --temperature 0.0 \
+    --max-new-tokens 256 \
+    --verbose
+```
+
+- Export to PyTorch
+
+```
+python -m mlx_vlm.convert \
+    --hf-path ./checkpoints/llava-fastvithd_0.5b_stage3 \
+    --pytorch-path ./exported/fastvlm_0.5b_8bit_torch \
+    -q --q-bits 8 \
+    --skip-vision  # Recommended for FastVLM
+```
+
+- Test PyTorch Output
+
+```
+python predict_mlxvlm.py \
+    --model-path ./exported/fastvlm_0.5b_8bit_torch \
+    --image-file ./000000039769.jpg \
+    --prompt "Describe this image in detail" \
+    --temperature 0.0 \
+    --max-new-tokens 256 \
+    --verbose
+```

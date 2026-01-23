@@ -115,6 +115,34 @@ python predict_mlxvlm.py \
     --verbose
 ```
 
+```
+Loading model from ./exported/fastvlm_0.5b_8bit...
+[INFO] Found 170 quantized layers to dequantize
+[INFO] Loading vision tower with 653 weights
+[INFO] Found 653 vision tower weights with prefix 'vision_tower.model.vision_tower.model.'
+[INFO] Found 12 quantized vision tower layers, dequantizing...
+[INFO] Dequantized 12 vision tower layers
+[INFO] Adding 'model.' prefix to vision weights
+[INFO] Successfully loaded vision tower using original LLaVA implementation
+Model loaded in 2.46s
+
+Image: ./000000039769.jpg
+Prompt: Describe this image in detail
+Temperature: 0.0
+Max tokens: 256
+
+Generating response...
+==========
+Image: ./000000039769.jpg
+Prompt: Describe this image in detail
+
+Generated: :
+In this image, two cats are sleeping on a pink couch. The cat on the left is a tabby with a striped pattern, and the cat on the right is a tabby with a more mottled, striped pattern. Both cats have their eyes closed and are in a relaxed, sleeping position. The tabby on the left has a green collar, while the tabby on the right has a brown collar. There are two remote controls on the couch, one in front of each cat. The remote controls are white with multiple buttons. The couch is a bright pink color, and the cats' fur is a mix of dark and light stripes. The image captures a peaceful moment of the cats resting on the couch.
+==========
+Prompt: 7 tokens, 40.8 tokens/sec
+Generation: 148 tokens, 143.5 tokens/sec
+```
+
 - Test Original
 
 ```
